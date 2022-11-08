@@ -7,7 +7,7 @@ USER="validator"
 MOCK_USERS="mock_user_1 mock_user_2"
 CHAIN_ID="testing"
 MONIKER="docker_node_2"
-COIN="stake"
+COIN="ustake"
 
 DIR_CURRENT_FOLDER=$(pwd)
 DIR_TEMP_BUILD="$DIR_CURRENT_FOLDER/tmp/sources"
@@ -23,7 +23,12 @@ mkdir -p $VOLUME_2
 export DAEMON_HOME=$VOLUME_2
 export DAEMON_NAME=starnamed
 
+NODE_2_ID=$($BUILD_TARGET_STARNAME11 --home $VOLUME_2 tendermint show-node-id)
+NODE_2_VALIDATOR=$($BUILD_TARGET_STARNAME11 --home $VOLUME_2 tendermint show-validator)
 
-mnemonic=$(cat mnemonic_validator.json | jq .mnemonic)
 
 # import the mnemonic to the new validator
+(echo $PASSWORD) | $BUILD_TARGET_STARNAME11 --home $VOLUME_1 --keyring-backend file tx staking create-validator --yes --from $USER \
+    --amount "10000000$COIN" --pubkey $NODE_2_VALIDATOR --node-id $NODE_2_ID \
+    --commission-rate 0 --commission-max-rate 0 --commission-max-change-rate 0 \
+    --min-self-delegation 10000000 $@ --chain-id $CHAIN_ID
