@@ -13,9 +13,11 @@ DOCKER_MOUNT="/cosmos_chain"
 
 PROPOSAL_ID="1"
 
+PROPOSAL_HEIGHT=$(expr $(curl http://localhost:26657/status -s  | jq .result.sync_info.latest_block_height | bc -l) + 20)
+
 # Made proposal
 ./builds/starnamed10 version
-(echo "12341234") | ./builds/starnamed10 --home $VOLUME tx gov  submit-proposal software-upgrade cosmos-sdk-v0.44-upgrade --upgrade-height 20  --keyring-backend file --from validator --title v44 --description v044 --chain-id testing --yes
+(echo "12341234") | ./builds/starnamed10 --home $VOLUME tx gov  submit-proposal software-upgrade cosmos-sdk-v0.44-upgrade --upgrade-height $PROPOSAL_HEIGHT  --keyring-backend file --from validator --title v44 --description v044 --chain-id testing --yes
 
 (echo "12341234") | ./builds/starnamed10 --home $VOLUME tx gov  deposit $PROPOSAL_ID 10000000ustake --keyring-backend file --from validator --chain-id testing --yes
 

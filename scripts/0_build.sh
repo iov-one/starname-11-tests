@@ -1,10 +1,10 @@
 #!/bin/bash
 # set -o pipefail
 
-GIT_SSH_STARNAME10="git@github.com:iov-one/starnamed.git"
+GIT_SSH_STARNAME10="https://github.com/iov-one/starnamed.git"
 GIT_PULL_TAG_STARNAME10="v0.10.13"
 
-GIT_SSH_STARNAME11="git@github.com:iov-one/starname11.git"
+GIT_SSH_STARNAME11="https://github.com/iov-one/starname11.git"
 
 DIR_CURRENT_FOLDER=$(pwd)
 DIR_TEMP_BUILD="$DIR_CURRENT_FOLDER/tmp/sources"
